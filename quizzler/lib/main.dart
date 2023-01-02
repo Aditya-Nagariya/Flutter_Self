@@ -14,7 +14,12 @@ class Quizzler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: Text("The Quizzler"),
+          backgroundColor: CupertinoColors.systemTeal,
+        ),
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Padding(
@@ -44,6 +49,8 @@ class _QuizPageState extends State<QuizPage> {
                 title: "You Successfully Completed Quiz",
                 desc: "")
             .show();
+        quizeBrain.resetQuestion();
+        scorekeeper = [];
       } else {
         if (userPickedAnswere == correctAnswere) {
           scorekeeper.add(Icon(
@@ -79,7 +86,7 @@ class _QuizPageState extends State<QuizPage> {
                       quizeBrain.getQuestionText(),
                       style: TextStyle(
                         color: CupertinoColors.black,
-                        fontSize: 10,
+                        fontSize: 30,
                       ),
                     ),
                   ),
@@ -95,11 +102,14 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 checkAnswere(true);
               },
-              child: Text(
-                "True",
-                style: TextStyle(
-                  color: CupertinoColors.white,
-                  fontSize: 30,
+              child:  Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "True",
+                  style: TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 30,
+                  ),
                 ),
               ),
             ),
