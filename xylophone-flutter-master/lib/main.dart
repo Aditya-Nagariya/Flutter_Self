@@ -1,10 +1,31 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
+import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+
 
 void main() => runApp(XylophoneApp());
 
-class XylophoneApp extends StatelessWidget {
+class XylophoneApp extends StatefulWidget {
+  @override
+  State<XylophoneApp> createState() => _XylophoneAppState();
+}
+
+class _XylophoneAppState extends State<XylophoneApp> {
+
+  AudioPlayer player = AudioPlayer();
+  String audioasset = "assets/audio/ambulance_sound.mp3";
+  ByteData bytes = await rootBundle.load(audioasset); //load sound from assets
+  Uint8List  soundbytes = bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+  int result = await player.playBytes(soundbytes);
+  if(result == 1){ //play success
+  print("Sound playing successful.");
+  }else{
+  print("Error while playing sound.");
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
